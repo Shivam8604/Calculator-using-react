@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable default-case */
 import React, { useState } from 'react'
 import './App.css'
 
@@ -6,62 +8,64 @@ const App = () => {
   const [input,setInput] = useState('');
 
   const calculateResult = (input)=>{
-    try{
-      const operators = ["+","-","*","/"];
-      let operator = '';
+    let result;
 
-      for(let i = 0; i<input.length; i++){
+    try{
+      const operators = ['+','-','*','/','%'];
+      let operator = null;
+
+      for(let i = 0; i<input.lenght; i++){
         if(operators.includes(input[i])){
-          operator = input[i]
+          operator = input[i];
           break;
         }
       }
-
+      if(!operator){
+        setInput(parseFloat(input).toString());
+      }
       const [operand1,operand2] = input.split(operator).map(parseFloat);
+
       let result;
 
-      switch(operators){
-
-        case '+' : result = operand1 + operand2;
-          break;
-        case '-' : result = operand1 - operand2;
+      switch(operator){
+        case '+': result = operand1 + operand2;
         break;
-        case '*' : result = operand1 * operand2;
-          break;
-        case '/' : result = operand1 / operand2;
-          break;  
-        case '%' : result = operand1 % operand2;
-          break;
-        default:
-          throw new Error('Invalid Operator')
-
-
+        case '-': result = operand1 - operand2;
+        break;
+        case '*': result = operand1 * operand2;
+        break;
+        case '/': result = operand1 / operand2;
+        break;
+        case '%': result = operand1 % operand2;
+        break;
+        default: throw new Error("Invalid Expression")
       }
 
-      setInput(result.toString())
+      setInput(result.toString());
 
+    }catch(error){
+      setInput("Error")
     }
-    catch(error){
 
-    }
   }
 
-  const handleButtonClick = (value) =>{
+
+  const handleButtonClick = (value)=>{
     if(value === 'C'){
-        setInput('');
+      setInput('');
     }else if(value === "<"){
-      setInput(input.slice(0,-1))
-    }else if(value === '='){
+      setInput(input.slice(0,-1));
+    }else if(value === "="){
       calculateResult(input);
+    }else{
+      setInput((preValue) => preValue + value)
     }
-    else{
-      setInput((preValue)=> preValue +value)
-    }    
   }
 
 
+ 
 
-
+ 
 
   return (
     <div className='container'>
