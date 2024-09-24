@@ -8,44 +8,8 @@ const App = () => {
   const [input,setInput] = useState('');
 
   const calculateResult = (input)=>{
-    let result;
-
-    try{
-      const operators = ['+','-','*','/','%'];
-      let operator = null;
-
-      for(let i = 0; i<input.lenght; i++){
-        if(operators.includes(input[i])){
-          operator = input[i];
-          break;
-        }
-      }
-      if(!operator){
-        setInput(parseFloat(input).toString());
-      }
-      const [operand1,operand2] = input.split(operator).map(parseFloat);
-
-      let result;
-
-      switch(operator){
-        case '+': result = operand1 + operand2;
-        break;
-        case '-': result = operand1 - operand2;
-        break;
-        case '*': result = operand1 * operand2;
-        break;
-        case '/': result = operand1 / operand2;
-        break;
-        case '%': result = operand1 % operand2;
-        break;
-        default: throw new Error("Invalid Expression")
-      }
-
-      setInput(result.toString());
-
-    }catch(error){
-      setInput("Error")
-    }
+    
+    setInput(eval(input).toString());
 
   }
 
